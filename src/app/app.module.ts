@@ -1,11 +1,14 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { FocusDirective } from './directives/focus.directive';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FocusDirective
   ],
   imports: [
     BrowserModule
@@ -13,4 +16,6 @@ import { AppComponent } from './app.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule{}
+
+
