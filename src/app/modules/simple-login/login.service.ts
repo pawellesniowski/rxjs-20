@@ -10,10 +10,14 @@ export class LoginService extends Observable<string> {
     super((subscriber) =>
       of(Math.random())
         .pipe(
-          delay(500),
-          tap(() => console.log('Login request sent')),
           delay(2000),
-          map((res) => (res > 0.5 ? 'Login Failure' : 'Pawel Lesniowski'))
+          map((response) => {
+            if (response < 0.3) {
+              throw new Error('Login failed!');
+            }
+
+            return 'David Bowie';
+          })
         )
         .subscribe(subscriber)
     );
