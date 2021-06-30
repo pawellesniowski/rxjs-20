@@ -5,12 +5,10 @@ import {
   OnInit,
 } from '@angular/core';
 import { LoginService } from './login.service';
-import { Observable, of, Subject, timer } from 'rxjs';
+import { Observable, Observer, of, Subject, Subscription, timer } from 'rxjs';
 import {
   catchError,
-  delay,
   ignoreElements,
-  map,
   mapTo,
   repeat,
   retry,
@@ -18,8 +16,18 @@ import {
   startWith,
   switchMap,
   switchMapTo,
-  tap,
+  timeout,
 } from 'rxjs/operators';
+
+const responsePromis = Promise.resolve(Math.random());
+
+const subscriptionFn = (observer: Observer<number>) => {
+  responsePromis.then((val) => {
+    observer.next(val);
+  });
+};
+
+const observerX = Observable.create(subscriptionFn);
 
 @Component({
   selector: 'app-simple-login',
@@ -54,19 +62,16 @@ export class SimpleLoginComponent implements OnInit {
     @Inject(LoginService) private readonly loginService: Observable<string>
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('observerX: ', observerX);
+    observerX.pipe().subscribe((val: number) => console.log('x1: ', val));
 
-  submitLogin(): void {
-    this.loginService
-      .pipe(
-        map((res) => {
-          if (res === 'Login Failure') {
-            this.showError = true;
-          }
-        }),
-        delay(5000),
-        tap((_) => (this.showError = false))
-      )
-      .subscribe();
+    setTimeout(() => {
+      observerX.pipe().subscribe((val: number) => console.log('x2: ', val));
+    }, 2000);
+
+    setTimeout(() => {
+      observerX.pipe().subscribe((val: number) => console.log('x3: ', val));
+    }, 4000);
   }
 }
