@@ -6,6 +6,7 @@ import { FocusDirective } from './directives/focus.directive';
 import { PageVisibilityModule } from './modules/page-visibility/page-visibility.module';
 import { SimpleLoginModule } from './modules/simple-login/simple-login.module';
 import { LoadingModule } from './modules/loading/loading.module';
+import { CountdownModule } from './modules/countdown/countdown.module';
 
 @NgModule({
   declarations: [AppComponent, FocusDirective],
@@ -14,6 +15,7 @@ import { LoadingModule } from './modules/loading/loading.module';
     PageVisibilityModule,
     SimpleLoginModule,
     LoadingModule,
+    CountdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
