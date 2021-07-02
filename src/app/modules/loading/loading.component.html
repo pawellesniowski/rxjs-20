@@ -2,10 +2,6 @@
   Start loading
 </button>
 
-<p>loading status: {{loadingProgress$ | async}}</p>
-
-<p>result: {{result$ | async}}</p>
-
 <p *ngIf="result$ | async as result; else loading">
   {{result}}
 </p>

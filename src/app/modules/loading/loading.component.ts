@@ -1,7 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { LoadingService } from './loading.service';
 import { Subject } from 'rxjs';
-import { switchMap, filter } from 'rxjs/operators';
+import {
+  switchMap,
+  filter,
+  share,
+  map,
+  distinctUntilChanged,
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-loading',
@@ -10,15 +16,21 @@ import { switchMap, filter } from 'rxjs/operators';
   providers: [LoadingService],
 })
 export class LoadingComponent implements OnInit {
-  loading: Subject<number> = new Subject<number>();
+  private readonly load: Subject<number> = new Subject<number>();
 
-  response$ = this.loading.pipe(switchMap(() => this.loadingService.load()));
-
-  loadingProgress$ = this.response$.pipe(
-    filter((val) => typeof val === 'number')
+  private readonly response$ = this.load.pipe(
+    switchMap(() => this.loadingService.load()),
+    share()
   );
 
-  result$ = this.response$.pipe(filter((val) => typeof val !== 'number'));
+  readonly loadingProgress$ = this.response$.pipe(
+    filter((val) => Number.isFinite(val))
+  );
+
+  readonly result$ = this.response$.pipe(
+    map((val) => (typeof val === 'string' ? val : null)),
+    distinctUntilChanged()
+  );
 
   constructor(
     @Inject(LoadingService) private readonly loadingService: LoadingService
@@ -27,6 +39,6 @@ export class LoadingComponent implements OnInit {
   ngOnInit(): void {}
 
   onButtonClick(): void {
-    this.loading.next();
+    this.load.next();
   }
 }
