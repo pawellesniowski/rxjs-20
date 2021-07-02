@@ -10,7 +10,9 @@ export class LoadingService {
   // this method should return loading information in persantage, then return data in string:
   load(): Observable<number | string> {
     return interval(1000).pipe(
-      map((tick) => (tick + 1) * 20),
+      map((tick) => {
+        return (tick + 1) * 20;
+      }),
       take(5),
       endWith('Some data to display')
     );
