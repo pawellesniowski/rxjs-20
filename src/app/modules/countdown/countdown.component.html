@@ -1,0 +1,7 @@
+<ng-container *ngIf="countdown$ | async as value else resetButton">
+  <p>countdown$: {{ value }}</p>
+</ng-container>
+
+<ng-template #resetButton>
+  <button (click)="restartIt()">restart it</button>
+</ng-template>
