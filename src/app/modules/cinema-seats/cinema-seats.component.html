@@ -17,15 +17,15 @@
 </h3>
 
 <section class="cinema">
-  <button *ngFor="let seat of seats" class="seat">{{seat}}</button>
+  <button *ngFor="let seat of seats; trackBy: trackByFn" class="seat" (click)="selectSeat(seat)" [class.selected]="isSelected(seat)">{{seat}}</button>
 </section>
 
-Selected: {{0}}
+Selected: {{selectedSeats$ | async}}
 
-<button class="buy">
+<button class="buy" (click)="buyTickets()">
   Buy
 </button>
 
-<section *ngIf="false" class="final-cost">
-  Final cost is $ {{1 * 3}}
+<section *ngIf="showFinalCosts" class="final-cost">
+  Final cost is $ {{finalCost | async}}
 </section>
