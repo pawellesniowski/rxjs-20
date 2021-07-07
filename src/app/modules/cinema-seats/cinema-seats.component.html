@@ -1,0 +1,40 @@
+<blockquote>
+  <p>This is a really small cinema!</p>
+
+  <p>Let users pick seats and count them in <i>selected</i> counter.</p>
+
+  <p>Hide seats and show the final cost after user clicks <i>buy</i> button.</p>
+</blockquote>
+
+<h3>Choose your seats</h3>
+
+<ng-container *ngIf="!showFinalCosts; else checkout">
+  <section class="cinema">
+    <button
+      *ngFor="let seat of seats"
+      class="seat"
+      (click)="selectedSeat.next(seat)"
+      [class.selected]="(selectedSeats$ | async)?.has(seat)"
+    >
+      {{ seat }}
+    </button>
+  </section>
+</ng-container>
+
+<p>selectedSeat: {{ selectedSeat | async }}</p>
+
+<p>selectedSeats$:</p>
+<li *ngFor="let item of selectedSeats$ | async">
+  {{ item }}
+</li>
+
+<p>countSelectedSeats$: {{ countSelectedSeats$ | async }}</p>
+
+
+<button class="buy" (click)="buyTickets()">Buy</button>
+
+<ng-template #checkout>
+  <section class="final-cost">
+    Final cost is $ {{ finalCostSubject | async }}
+  </section>
+</ng-template>

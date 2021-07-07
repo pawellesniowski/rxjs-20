@@ -7,6 +7,7 @@ import { PageVisibilityModule } from './modules/page-visibility/page-visibility.
 import { SimpleLoginModule } from './modules/simple-login/simple-login.module';
 import { LoadingModule } from './modules/loading/loading.module';
 import { CountdownModule } from './modules/countdown/countdown.module';
+import { CinemaSeatsModule } from './modules/cinema-seats/cinema-seats.module';
 
 @NgModule({
   declarations: [AppComponent, FocusDirective],
@@ -16,6 +17,7 @@ import { CountdownModule } from './modules/countdown/countdown.module';
     SimpleLoginModule,
     LoadingModule,
     CountdownModule,
+    CinemaSeatsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
