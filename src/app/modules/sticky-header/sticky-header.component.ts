@@ -1,31 +1,27 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, fromEvent, Subscription } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
+import {
+  distinctUntilChanged,
+  map,
+  pairwise,
+  startWith,
+  tap,
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-sticky-header',
   templateUrl: './sticky-header.component.html',
   styleUrls: ['./sticky-header.component.scss'],
 })
-export class StickyHeaderComponent implements OnInit, OnDestroy {
-  subscription: Subscription = new Subscription();
-  lastScrollTop = 0;
-  isHidden = new BehaviorSubject(false);
+export class StickyHeaderComponent {
+  isHidden$ = fromEvent(this.documentRef, 'scroll').pipe(
+    map(() => this.documentRef.documentElement.scrollTop),
+    pairwise(),
+    map(([prev, next]) => prev < next),
+    startWith(false),
+    distinctUntilChanged()
+  );
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.subscription = fromEvent(document, 'scroll').subscribe((e) => {
-      const st = window.pageYOffset || document.documentElement.scrollTop;
-      if (st > this.lastScrollTop) {
-        this.isHidden.next(true);
-      } else {
-        this.isHidden.next(false);
-      }
-      this.lastScrollTop = st <= 0 ? 0 : st;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+  constructor(@Inject(DOCUMENT) private readonly documentRef: Document) {}
 }
