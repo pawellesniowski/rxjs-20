@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, of, OperatorFunction } from 'rxjs';
-import { mapTo } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  mapTo,
+  scan,
+  startWith,
+  switchMap,
+} from 'rxjs/operators';
 
 function requestBackendEmulation(
   search: string
 ): Observable<readonly string[]> {
-  console.log('backend called');
-
+  console.log('search: ', search);
   const tests = ['test1', 'test2', 'test3'].filter(
     (test) => !!search && test.startsWith(search)
   );
@@ -28,7 +35,18 @@ export function smartSearch<T>(
   getSearchFunction: (search: string) => Observable<readonly T[]>,
   searchDebouceTimeMs: number = 400
 ): OperatorFunction<string, readonly T[] | null> {
-  return (source) => source.pipe(mapTo([]));
+  return (source) =>
+    source.pipe(
+      debounceTime(searchDebouceTimeMs),
+      scan((prevSearch, current) => {
+        return prevSearch !== '' && current.startsWith(prevSearch)
+          ? prevSearch
+          : current;
+      }, ''),
+      distinctUntilChanged(),
+      switchMap((value) => getSearchFunction(value).pipe(startWith(null))),
+      startWith([])
+    );
 }
 
 @Component({
@@ -42,6 +60,9 @@ export class CalculateLocallyComponent {
   readonly emptyArray = [];
 
   readonly items$ = this.control.valueChanges.pipe(
+    map((val) => {
+      return val;
+    }),
     smartSearch(requestBackendEmulation)
   );
 

@@ -7,6 +7,8 @@
 
 <input [formControl]="control" />
 
+<h2>output items</h2>
+
 <h3>Items:</h3>
 
 <p *ngFor="let item of ((items$ | async) || emptyArray) | filter : filterValue : control.value">
