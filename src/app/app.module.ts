@@ -10,6 +10,7 @@ import { CountdownModule } from './modules/countdown/countdown.module';
 import { CinemaSeatsModule } from './modules/cinema-seats/cinema-seats.module';
 import { StickyHeaderModule } from './modules/sticky-header/sticky-header.module';
 import { CalculateLocallyModule } from './modules/calculate-locally/calculate-locally.module';
+import { KaraokeModule } from './modules/karaoke/karaoke.module';
 
 @NgModule({
   declarations: [AppComponent, FocusDirective],
@@ -22,6 +23,7 @@ import { CalculateLocallyModule } from './modules/calculate-locally/calculate-lo
     CinemaSeatsModule,
     StickyHeaderModule,
     CalculateLocallyModule,
+    KaraokeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
