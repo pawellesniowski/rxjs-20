@@ -1,0 +1,13 @@
+
+
+<!--<div class="color-picker" #colorPicker>-->
+<!--  <div class="circle" [style.left.%]="left$ | async" [style.top.%]="top$ | async"></div>-->
+<!--</div>-->
+
+<div #colorPicker *ngIf="coordinates$ | async as coordinates" class="color-picker">
+  <div class="circle" [style.left.px]="coordinates[0]" [style.top.px]="coordinates[1]"></div>
+</div>
+
+
+<h1>coordinates$ : {{coordinates$ | async | json}}</h1>
+
