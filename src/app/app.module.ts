@@ -11,6 +11,7 @@ import { CinemaSeatsModule } from './modules/cinema-seats/cinema-seats.module';
 import { StickyHeaderModule } from './modules/sticky-header/sticky-header.module';
 import { CalculateLocallyModule } from './modules/calculate-locally/calculate-locally.module';
 import { KaraokeModule } from './modules/karaoke/karaoke.module';
+import { ColorPickerModule } from './modules/color-picker/color-picker.module';
 
 @NgModule({
   declarations: [AppComponent, FocusDirective],
@@ -24,6 +25,7 @@ import { KaraokeModule } from './modules/karaoke/karaoke.module';
     StickyHeaderModule,
     CalculateLocallyModule,
     KaraokeModule,
+    ColorPickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
