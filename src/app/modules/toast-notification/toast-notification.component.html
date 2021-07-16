@@ -1,0 +1,15 @@
+<blockquote>
+  Make notification auto-close in 3 seconds, unless user hovers over it with a
+  cursor
+</blockquote>
+<div class="notifications">
+  <app-notification *ngFor="let item of service | async" [observer]="item.observer">
+    {{item.content}}
+  </app-notification>
+</div>
+<p>
+  <input [(ngModel)]="text" />
+  <button (click)="show()">
+    Show
+  </button>
+</p>

@@ -12,6 +12,7 @@ import { StickyHeaderModule } from './modules/sticky-header/sticky-header.module
 import { CalculateLocallyModule } from './modules/calculate-locally/calculate-locally.module';
 import { KaraokeModule } from './modules/karaoke/karaoke.module';
 import { ColorPickerModule } from './modules/color-picker/color-picker.module';
+import { ToastNotificationModule } from './modules/toast-notification/toast-notification.module';
 
 @NgModule({
   declarations: [AppComponent, FocusDirective],
@@ -26,6 +27,7 @@ import { ColorPickerModule } from './modules/color-picker/color-picker.module';
     CalculateLocallyModule,
     KaraokeModule,
     ColorPickerModule,
+    ToastNotificationModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
